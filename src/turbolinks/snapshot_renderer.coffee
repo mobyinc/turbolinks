@@ -5,7 +5,7 @@ class Turbolinks.SnapshotRenderer extends Turbolinks.Renderer
   constructor: (@currentSnapshot, @newSnapshot, @isPreview) ->
     @currentHeadDetails = new Turbolinks.HeadDetails @currentSnapshot.head
     @newHeadDetails = new Turbolinks.HeadDetails @newSnapshot.head
-    @newBody = @newSnapshot.body
+    @newBody = @newSnapshot.body.querySelector('#pg-content')
 
   render: (callback) ->
     if @shouldRender()
@@ -24,8 +24,6 @@ class Turbolinks.SnapshotRenderer extends Turbolinks.Renderer
     @copyNewHeadProvisionalElements()
 
   replaceBody: ->
-    @activateBodyScriptElements()
-    @importBodyPermanentElements()
     @assignNewBody()
 
   shouldRender: ->
@@ -61,7 +59,7 @@ class Turbolinks.SnapshotRenderer extends Turbolinks.Renderer
       replaceableElement.parentNode.replaceChild(element, replaceableElement)
 
   assignNewBody: ->
-    document.body = @newBody
+    document.querySelector('#pg-content').innerHTML = @newBody.innerHTML
 
   focusFirstAutofocusableElement: ->
     @findFirstAutofocusableElement()?.focus()
